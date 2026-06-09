@@ -1,0 +1,13 @@
+# Visual Studio Code
+.vscode/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Working copies
+.skill-src/
+*.pdf
+
+# Node (in case any tooling is added later)
+node_modules/
