@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Coffee Brewing Methods — A Field Guide</title>
+<meta name="description" content="A calm, focused walk through the most popular coffee brewing methods: pour-over, French press, espresso, and cold brew." />
+
+<!-- Fonts: Cormorant (display serif) + IBM Plex Sans (body) + IBM Plex Mono (tech labels) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<style>
+/* ===========================================
+   CSS CUSTOM PROPERTIES (THEME — DARK BOTANICAL)
+   =========================================== */
+:root {
+    /* Colors */
+    --bg-primary: #0f0f0f;
+    --bg-secondary: #161412;
+    --bg-tint: #1a1714;
+    --text-primary: #e8e4df;
+    --text-secondary: #9a9590;
+    --text-faint: #5a5550;
+    --accent-warm: #d4a574;   /* warm caramel */
+    --accent-pink: #e8b4b8;   /* dusty rose */
+    --accent-gold: #c9b896;   /* champagne */
+    --accent-deep: #8a5a3c;   /* roasted bean */
+    --hairline: rgba(232, 228, 223, 0.08);
+
+    /* Typography */
+    --font-display: 'Cormorant', serif;
+    --font-body: 'IBM Plex Sans', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+
+    --title-size: clamp(2.5rem, 8vw, 6.5rem);
+    --h2-size: clamp(1.75rem, 5vw, 4rem);
+    --h3-size: clamp(1.1rem, 2vw, 1.6rem);
+    --body-size: clamp(0.9rem, 1.3vw, 1.1rem);
+    --small-size: clamp(0.72rem, 0.95vw, 0.88rem);
+    --mono-size: clamp(0.65rem, 0.9vw, 0.8rem);
+
+    /* Spacing */
+    --slide-padding: clamp(1.5rem, 5vw, 5rem);
+    --content-gap: clamp(0.75rem, 1.8vw, 1.75rem);
+
+    /* Motion */
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --duration-fast: 0.4s;
+    --duration-normal: 0.8s;
+    --duration-slow: 1.2s;
+}
+
+/* ===========================================
+   RESET
+   =========================================== */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===========================================
+   VIEWPORT BASE (from viewport-base.css)
+   =========================================== */
+html, body {
+    height: 100%;
+    overflow-x: hidden;
+}
+html {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+}
+body {
+    font-family: var(--font-body);
+    font-weight: 300;
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.slide {
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: var(--slide-padding);
+    background:
+        radial-gradient(circle at 80% 18%, rgba(232, 180, 184, 0.05) 0%, transparent 45%),
+        radial-gradient(circle at 12% 88%, rgba(212, 165, 116, 0.07) 0%, transparent 50%),
+        linear-gradient(135deg, #141210 0%, #0f0f0f 50%, #1a1714 100%);
+}
+
+/* Short viewport breakpoints */
+@media (max-height: 700px) {
+    :root {
+        --slide-padding: clamp(1rem, 3vw, 2.5rem);
+        --content-gap: clamp(0.5rem, 1.4vw, 1.25rem);
+        --title-size: clamp(2rem, 6.5vw, 4rem);
+        --h2-size: clamp(1.4rem, 4vw, 2.5rem);
+    }
+}
+@media (max-height: 600px) {
+    :root {
+        --slide-padding: clamp(0.75rem, 2.5vw, 1.75rem);
+        --content-gap: clamp(0.4rem, 1vw, 0.9rem);
+        --title-size: clamp(1.6rem, 5.5vw, 3rem);
+        --h2-size: clamp(1.2rem, 3.5vw, 2rem);
+        --body-size: clamp(0.78rem, 1.1vw, 0.95rem);
+    }
+    .nav-dots, .keyboard-hint, .decorative { display: none; }
+}
+@media (max-height: 500px) {
+    :root {
+        --slide-padding: clamp(0.5rem, 2vw, 1.25rem);
+        --title-size: clamp(1.3rem, 4.5vw, 2rem);
+        --h2-size: clamp(1rem, 3vw, 1.5rem);
+        --body-size: clamp(0.7rem, 1vw, 0.85rem);
+    }
+}
+@media (max-width: 600px) {
+    :root {
+        --title-size: clamp(2rem, 11vw, 3.5rem);
+        --h2-size: clamp(1.5rem, 8vw, 2.5rem);
+    }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+    html { scroll-behavior: auto; }
+}
+
+/* ===========================================
+   SHARED ATMOSPHERIC ELEMENTS
+   Abstract soft-gradient circles (per Dark Botanical)
+   =========================================== */
+.shape {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--duration-slow) var(--ease-out-expo),
+                transform var(--duration-slow) var(--ease-out-expo);
+    transform: translateY(20px) scale(0.85);
+}
+.slide.visible .shape { opacity: 0.5; transform: translateY(0) scale(1); }
+.slide.visible .shape.shape-3 { opacity: 0.38; }
+
+.shape-1 {
+    width: clamp(220px, 30vw, 440px);
+    height: clamp(220px, 30vw, 440px);
+    background: radial-gradient(circle, var(--accent-pink) 0%, transparent 70%);
+    top: -10%; right: -8%;
+    transition-delay: 100ms;
+}
+.shape-2 {
+    width: clamp(260px, 32vw, 480px);
+    height: clamp(260px, 32vw, 480px);
+    background: radial-gradient(circle, var(--accent-warm) 0%, transparent 65%);
+    bottom: -12%; left: -10%;
+    transition-delay: 250ms;
+}
+.shape-3 {
+    width: clamp(120px, 14vw, 200px);
+    height: clamp(120px, 14vw, 200px);
+    background: radial-gradient(circle, var(--accent-gold) 0%, transparent 70%);
+    filter: blur(40px);
+    top: 55%; right: 18%;
+    transition-delay: 420ms;
+}
+
+/* Thin vertical accent line — Dark Botanical signature */
+.accent-line {
+    position: absolute;
+    left: clamp(1.5rem, 3vw, 3rem);
+    top: 18%; bottom: 18%;
+    width: 1px;
+    background: linear-gradient(180deg,
+        transparent,
+        var(--accent-warm) 40%,
+        var(--accent-warm) 60%,
+        transparent);
+    transform-origin: top;
+    transform: scaleY(0);
+    transition: transform var(--duration-slow) var(--ease-out-expo) 500ms;
+    z-index: 1;
+}
+.slide.visible .accent-line { transform: scaleY(1); }
+
+/* ===========================================
+   REVEAL ANIMATION (Intersection Observer)
+   =========================================== */
+.reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+        opacity var(--duration-normal) var(--ease-out-expo),
+        transform var(--duration-normal) var(--ease-out-expo);
+}
+.slide.visible .reveal { opacity: 1; transform: translateY(0); }
+
+.reveal:nth-child(1) { transition-delay: 150ms; }
+.reveal:nth-child(2) { transition-delay: 280ms; }
+.reveal:nth-child(3) { transition-delay: 410ms; }
+.reveal:nth-child(4) { transition-delay: 540ms; }
+.reveal:nth-child(5) { transition-delay: 670ms; }
+.reveal:nth-child(6) { transition-delay: 800ms; }
+
+/* ===========================================
+   TYPOGRAPHY PRIMITIVES
+   =========================================== */
+.eyebrow {
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-size: var(--mono-size);
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent-warm);
+    display: inline-flex;
+    align-items: center;
+    gap: clamp(0.6rem, 1vw, 1rem);
+}
+.eyebrow::before {
+    content: "";
+    display: block;
+    width: clamp(28px, 4vw, 52px);
+    height: 1px;
+    background: var(--accent-warm);
+}
+
+h1.title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: var(--title-size);
+    line-height: 0.98;
+    letter-spacing: -0.015em;
+    color: var(--text-primary);
+}
+h1.title .italic,
+h2.section-title .italic {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--accent-pink);
+}
+
+h2.section-title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: var(--h2-size);
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+    color: var(--text-primary);
+}
+
+.lede {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: var(--body-size);
+    line-height: 1.65;
+    color: var(--text-secondary);
+    max-width: 56ch;
+}
+
+/* Subtle italic signature line */
+.signature {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1rem, 1.5vw, 1.3rem);
+    color: var(--accent-gold);
+    display: flex;
+    align-items: center;
+    gap: clamp(0.75rem, 1.5vw, 1.5rem);
+}
+.signature .swash {
+    color: var(--accent-warm);
+    font-size: 1.4em;
+    line-height: 0;
+    letter-spacing: -0.1em;
+}
+
+/* ===========================================
+   PER-SLIDE LAYOUTS
+   =========================================== */
+
+/* --- Slide 1: Title / Intro --- */
+.slide-title .content {
+    position: relative;
+    z-index: 2;
+    margin: auto 0;
+    max-width: min(85%, 920px);
+    display: flex;
+    flex-direction: column;
+    gap: var(--content-gap);
+}
+.slide-title .signature { margin-top: clamp(0.5rem, 1.2vw, 1rem); }
+
+/* --- Method slides: two-column layout --- */
+.method {
+    display: grid;
+    grid-template-columns: 1fr clamp(220px, 32vw, 420px);
+    grid-template-rows: auto 1fr auto;
+    column-gap: clamp(1.5rem, 4vw, 4rem);
+    row-gap: clamp(0.5rem, 1.5vw, 1.25rem);
+    height: 100%;
+    position: relative;
+    z-index: 2;
+}
+.method .index {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: var(--mono-size);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    padding-bottom: clamp(0.4rem, 1vw, 0.8rem);
+    border-bottom: 1px solid var(--hairline);
+}
+.method .index strong {
+    color: var(--accent-warm);
+    font-weight: 500;
+}
+
+.method .copy {
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.75rem, 1.8vw, 1.5rem);
+    padding-right: clamp(0.5rem, 2vw, 1.5rem);
+    min-width: 0;
+}
+.method .copy .label {
+    font-family: var(--font-mono);
+    font-size: var(--mono-size);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent-warm);
+}
+.method .copy p {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: var(--body-size);
+    line-height: 1.65;
+    color: var(--text-secondary);
+    max-width: 52ch;
+}
+.method .copy p strong {
+    color: var(--text-primary);
+    font-weight: 400;
+}
+
+/* --- Spec card (right column) --- */
+.spec-card {
+    align-self: center;
+    background: linear-gradient(160deg, rgba(255,255,255,0.025), rgba(255,255,255,0.005));
+    border: 1px solid var(--hairline);
+    border-radius: 4px;
+    padding: clamp(0.85rem, 1.6vw, 1.4rem);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.5rem, 1.2vw, 1rem);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    max-height: min(82%, 560px);
+    overflow: hidden;
+}
+.spec-card .card-title {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(1rem, 1.5vw, 1.3rem);
+    color: var(--accent-pink);
+    padding-bottom: clamp(0.4rem, 1vw, 0.7rem);
+    border-bottom: 1px solid var(--hairline);
+}
+.spec-card dl {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: clamp(0.75rem, 1.5vw, 1.25rem);
+    row-gap: clamp(0.45rem, 1vw, 0.75rem);
+    font-family: var(--font-mono);
+    font-size: var(--mono-size);
+    line-height: 1.5;
+}
+.spec-card dt {
+    color: var(--text-faint);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+.spec-card dd {
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+    font-size: var(--small-size);
+}
+
+/* --- Method footer (best for) --- */
+.method .best-for {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: clamp(0.6rem, 1.2vw, 1rem);
+    padding-top: clamp(0.5rem, 1vw, 0.9rem);
+    border-top: 1px solid var(--hairline);
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(0.95rem, 1.5vw, 1.25rem);
+    color: var(--accent-gold);
+}
+.method .best-for .tag {
+    font-family: var(--font-mono);
+    font-style: normal;
+    font-size: var(--mono-size);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    padding-right: clamp(0.6rem, 1.2vw, 1rem);
+    border-right: 1px solid var(--hairline);
+}
+
+/* ===========================================
+   PER-METHOD CUSTOM VISUALS (abstract)
+   Each method gets a distinctive abstract shape
+   inside its spec-card area for visual variety
+   =========================================== */
+.visual {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    max-height: clamp(160px, 28vh, 320px);
+    margin-bottom: clamp(0.4rem, 1vw, 0.85rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    overflow: hidden;
+    background: linear-gradient(160deg, rgba(212,165,116,0.06), rgba(232,180,184,0.02));
+}
+
+/* === HERO PHOTO === overlays the abstract CSS visual; if the image
+   fails to load it is hidden and the abstract fallback shows through. */
+.hero-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 3;
+    opacity: 0;
+    transform: scale(1.06);
+    /* Warm duotone so photos sit naturally in the Dark Botanical palette */
+    filter: sepia(0.28) saturate(0.85) brightness(0.88) contrast(1.05) hue-rotate(-8deg);
+    transition:
+        opacity var(--duration-slow) var(--ease-out-expo),
+        transform 1.6s var(--ease-out-expo),
+        filter var(--duration-normal) ease;
+}
+.hero-photo.loaded { opacity: 1; }
+.slide.visible .hero-photo.loaded { transform: scale(1); }
+.hero-photo:hover { filter: sepia(0.18) saturate(1) brightness(0.96) contrast(1.05); }
+
+/* Subtle gradient overlay on top of the photo for legibility & atmosphere */
+.visual::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    background: linear-gradient(180deg,
+        rgba(15,15,15,0) 40%,
+        rgba(15,15,15,0.45) 100%);
+    pointer-events: none;
+}
+
+/* Pour-over fallback: concentric circles + diagonal "stream" */
+.visual.pourover::before {
+    content: "";
+    position: absolute;
+    width: 70%; height: 70%;
+    border-radius: 50%;
+    border: 1px solid var(--accent-warm);
+    opacity: 0.55;
+    z-index: 1;
+}
+.visual.pourover .ring-inner {
+    position: absolute;
+    width: 40%; height: 40%;
+    border-radius: 50%;
+    border: 1px solid var(--accent-pink);
+    opacity: 0.55;
+    z-index: 1;
+}
+.visual.pourover .stream {
+    position: absolute; top: -8%; left: 50%;
+    width: 1.5px; height: 38%;
+    background: linear-gradient(180deg, transparent, var(--accent-pink));
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+/* French press fallback: stacked horizontal bars (plunger) */
+.visual.french {
+    flex-direction: column;
+    gap: clamp(3px, 0.6vh, 6px);
+}
+.visual.french span {
+    display: block;
+    height: 6%;
+    background: var(--accent-warm);
+    opacity: 0.65;
+    border-radius: 1px;
+    z-index: 1;
+}
+.visual.french span:nth-child(1) { width: 18%; opacity: 0.9; }
+.visual.french span:nth-child(2) { width: 28%; height: 2%; opacity: 0.4; }
+.visual.french span:nth-child(3) { width: 65%; background: var(--accent-pink); opacity: 0.55; }
+.visual.french span:nth-child(4) { width: 70%; background: var(--accent-deep); opacity: 0.7; height: 18%; border-radius: 0 0 6px 6px; }
+
+/* Espresso fallback: solid dark circle with crema cap */
+.visual.espresso .cup {
+    position: absolute;
+    width: 62%; height: 62%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 35%,
+        var(--accent-gold) 0%,
+        var(--accent-warm) 18%,
+        #3a2418 55%,
+        #1a0f08 100%);
+    box-shadow: 0 0 60px -5px rgba(212, 165, 116, 0.35);
+    z-index: 1;
+}
+.visual.espresso .crema {
+    position: absolute;
+    width: 62%; height: 4px;
+    top: calc(50% - 31% + 4px);
+    background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+    opacity: 0.7;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+/* Cold brew fallback: tall narrow oval with bubble */
+.visual.cold .vessel {
+    position: absolute;
+    width: 38%; height: 86%;
+    border: 1px solid var(--accent-pink);
+    border-radius: 50% / 12%;
+    background: linear-gradient(180deg,
+        rgba(232, 180, 184, 0.08) 0%,
+        rgba(138, 90, 60, 0.35) 100%);
+    z-index: 1;
+}
+.visual.cold .drop {
+    position: absolute;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent-pink);
+    opacity: 0.85;
+    top: 30%; left: calc(50% + 18%);
+    box-shadow:
+        -6px 14px 0 -2px var(--accent-warm),
+        4px 28px 0 -3px var(--accent-gold);
+    z-index: 1;
+}
+
+/* ===========================================
+   CHROME: PROGRESS BAR + NAV DOTS + HINT
+   =========================================== */
+.progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent-warm), var(--accent-pink));
+    z-index: 100;
+    transition: width 0.25s ease;
+    box-shadow: 0 0 10px rgba(212, 165, 116, 0.4);
+}
+
+.nav-dots {
+    position: fixed;
+    right: clamp(0.75rem, 2vw, 1.75rem);
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.5rem, 1vh, 0.85rem);
+    z-index: 50;
+}
+.nav-dots button {
+    appearance: none;
+    border: none;
+    background: transparent;
+    padding: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.nav-dots .dot {
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--text-faint);
+    transition: all 0.3s var(--ease-out-expo);
+}
+.nav-dots button:hover .dot { background: var(--accent-warm); transform: scale(1.3); }
+.nav-dots button.active .dot {
+    background: var(--accent-warm);
+    width: 8px; height: 8px;
+    box-shadow: 0 0 12px rgba(212, 165, 116, 0.6);
+}
+
+.slide-meta {
+    position: absolute;
+    left: var(--slide-padding);
+    bottom: clamp(0.9rem, 2vw, 1.5rem);
+    font-family: var(--font-mono);
+    font-size: var(--mono-size);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    z-index: 2;
+}
+.slide-meta strong { color: var(--accent-warm); font-weight: 500; }
+
+.keyboard-hint {
+    position: fixed;
+    bottom: clamp(0.75rem, 1.5vw, 1.25rem);
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: clamp(0.6rem, 0.75vw, 0.72rem);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    z-index: 50;
+    pointer-events: none;
+    opacity: 0;
+    animation: hintFadeIn 600ms ease forwards 1.5s;
+}
+.keyboard-hint kbd {
+    font-family: var(--font-mono);
+    background: rgba(232, 228, 223, 0.06);
+    border: 1px solid var(--hairline);
+    border-radius: 3px;
+    padding: 1px 6px;
+    color: var(--text-secondary);
+    margin: 0 2px;
+}
+@keyframes hintFadeIn { to { opacity: 1; } }
+</style>
+</head>
+
+<body>
+
+<!-- === PROGRESS BAR === -->
+<div class="progress-bar" aria-hidden="true"></div>
+
+<!-- === NAV DOTS (generated by JS) === -->
+<nav class="nav-dots" aria-label="Slide navigation"></nav>
+
+<!-- === KEYBOARD HINT === -->
+<div class="keyboard-hint" aria-hidden="true">
+    <kbd>&darr;</kbd> next &middot; <kbd>&uarr;</kbd> previous &middot; <kbd>Space</kbd> advance
+</div>
+
+<!-- ===========================================
+     SLIDE 1: INTRO — WHY BREW METHOD MATTERS
+     =========================================== -->
+<section class="slide slide-title" data-title="Introduction">
+    <div class="shape shape-1" aria-hidden="true"></div>
+    <div class="shape shape-2" aria-hidden="true"></div>
+    <div class="shape shape-3" aria-hidden="true"></div>
+    <div class="accent-line" aria-hidden="true"></div>
+
+    <div class="content">
+        <span class="eyebrow reveal">A field guide &middot; 2026</span>
+        <h1 class="title reveal">Coffee, brewed<br/><span class="italic">four ways.</span></h1>
+        <p class="lede reveal">Coffee's flavor is shaped as much by <strong style="color:var(--text-primary);font-weight:400">how you brew it</strong> as by the beans themselves. Grind size, water temperature, and contact time decide whether your cup tastes bright, balanced, or bitter &mdash; a short walk through the methods that matter.</p>
+        <div class="signature reveal"><span class="swash">~</span><span>three variables, four cups</span></div>
+    </div>
+
+    <div class="slide-meta">
+        <span>01 / 05</span> &nbsp;&middot;&nbsp; <strong>Introduction</strong>
+    </div>
+</section>
+
+<!-- ===========================================
+     SLIDE 2: POUR-OVER (DRIP)
+     =========================================== -->
+<section class="slide" data-title="Pour-Over">
+    <div class="shape shape-1" aria-hidden="true"></div>
+    <div class="shape shape-2" aria-hidden="true"></div>
+    <div class="shape shape-3" aria-hidden="true"></div>
+    <div class="accent-line" aria-hidden="true"></div>
+
+    <div class="method">
+        <!-- Index header -->
+        <div class="index reveal">
+            <span>Method &mdash; <strong>02</strong></span>
+            <span>Filtered &middot; Manual</span>
+        </div>
+
+        <!-- Left: copy -->
+        <div class="copy">
+            <span class="label reveal">Drip &middot; Pour-Over</span>
+            <h2 class="section-title reveal">A <span class="italic">clean, bright</span> cup &mdash; built drop by drop.</h2>
+            <p class="reveal">Pour-over brewing &mdash; <strong>V60, Chemex, Kalita</strong> &mdash; passes hot water through ground coffee in a paper filter. The result is a cup that is clean, bright, and remarkably nuanced. The brewer controls everything: <strong>flow rate, saturation, bloom, and timing</strong>.</p>
+        </div>
+
+        <!-- Right: spec card with hero photo + abstract fallback -->
+        <aside class="spec-card reveal">
+            <div class="visual pourover" aria-hidden="true">
+                <span class="ring-inner"></span>
+                <span class="stream"></span>
+                <img class="hero-photo"
+                     src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=85"
+                     alt="Pour-over coffee being brewed through a paper filter"
+                     loading="lazy"
+                     onload="this.classList.add('loaded')"
+                     onerror="this.remove()" />
+            </div>
+            <div class="card-title">at a glance</div>
+            <dl>
+                <dt>Grind</dt><dd>Medium &middot; medium-fine</dd>
+                <dt>Water</dt><dd>92&ndash;96&deg;C</dd>
+                <dt>Time</dt><dd>2:30 &ndash; 4:00 min</dd>
+                <dt>Filter</dt><dd>Paper</dd>
+                <dt>Body</dt><dd>Light &middot; clean</dd>
+            </dl>
+        </aside>
+
+        <!-- Footer: best for -->
+        <div class="best-for reveal">
+            <span class="tag">Best for</span>
+            <span>highlighting the delicate, fruity notes of <em>single-origin</em> coffees.</span>
+        </div>
+    </div>
+
+    <div class="slide-meta">
+        <span>02 / 05</span> &nbsp;&middot;&nbsp; <strong>Pour-Over</strong>
+    </div>
+</section>
+
+<!-- ===========================================
+     SLIDE 3: FRENCH PRESS (IMMERSION)
+     =========================================== -->
+<section class="slide" data-title="French Press">
+    <div class="shape shape-1" aria-hidden="true"></div>
+    <div class="shape shape-2" aria-hidden="true"></div>
+    <div class="shape shape-3" aria-hidden="true"></div>
+    <div class="accent-line" aria-hidden="true"></div>
+
+    <div class="method">
+        <div class="index reveal">
+            <span>Method &mdash; <strong>03</strong></span>
+            <span>Immersion &middot; Unfiltered</span>
+        </div>
+
+        <div class="copy">
+            <span class="label reveal">French Press</span>
+            <h2 class="section-title reveal">Full body, <span class="italic">forgiving</span> &mdash; steep, plunge, pour.</h2>
+            <p class="reveal">The French press steeps coarsely ground coffee directly in hot water for about <strong>four minutes</strong>, then separates the grounds with a metal mesh plunger. Without a paper filter, more <strong>oils and fine particles</strong> remain in the cup &mdash; producing a heavier, rounder mouthfeel.</p>
+        </div>
+
+        <aside class="spec-card reveal">
+            <div class="visual french" aria-hidden="true">
+                <span></span><span></span><span></span><span></span>
+                <img class="hero-photo"
+                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Coffee_press_with_coffee.jpg/1280px-Coffee_press_with_coffee.jpg"
+                     alt="A French press filled with freshly brewed coffee"
+                     loading="lazy"
+                     onload="this.classList.add('loaded')"
+                     onerror="this.remove()" />
+            </div>
+            <div class="card-title">at a glance</div>
+            <dl>
+                <dt>Grind</dt><dd>Coarse</dd>
+                <dt>Water</dt><dd>~93&deg;C</dd>
+                <dt>Time</dt><dd>~4:00 min</dd>
+                <dt>Filter</dt><dd>Metal mesh</dd>
+                <dt>Body</dt><dd>Full &middot; rich</dd>
+            </dl>
+        </aside>
+
+        <div class="best-for reveal">
+            <span class="tag">Best for</span>
+            <span>a heavier mouthfeel &mdash; <em>simple, forgiving, generous.</em></span>
+        </div>
+    </div>
+
+    <div class="slide-meta">
+        <span>03 / 05</span> &nbsp;&middot;&nbsp; <strong>French Press</strong>
+    </div>
+</section>
+
+<!-- ===========================================
+     SLIDE 4: ESPRESSO
+     =========================================== -->
+<section class="slide" data-title="Espresso">
+    <div class="shape shape-1" aria-hidden="true"></div>
+    <div class="shape shape-2" aria-hidden="true"></div>
+    <div class="shape shape-3" aria-hidden="true"></div>
+    <div class="accent-line" aria-hidden="true"></div>
+
+    <div class="method">
+        <div class="index reveal">
+            <span>Method &mdash; <strong>04</strong></span>
+            <span>Pressure &middot; Concentrated</span>
+        </div>
+
+        <div class="copy">
+            <span class="label reveal">Espresso</span>
+            <h2 class="section-title reveal">Pressure, time, <span class="italic">crema</span> &mdash; concentrated by force.</h2>
+            <p class="reveal">Espresso forces hot water through finely ground, tightly packed coffee under <strong>~9 bars of pressure</strong>, in roughly <strong>25&ndash;30 seconds</strong>. The result is a small, intense shot crowned with crema &mdash; the foundation for lattes, cappuccinos, and Americanos.</p>
+        </div>
+
+        <aside class="spec-card reveal">
+            <div class="visual espresso" aria-hidden="true">
+                <span class="cup"></span>
+                <span class="crema"></span>
+                <img class="hero-photo"
+                     src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=900&q=85"
+                     alt="Espresso shot pulling from a portafilter"
+                     loading="lazy"
+                     onload="this.classList.add('loaded')"
+                     onerror="this.remove()" />
+            </div>
+            <div class="card-title">at a glance</div>
+            <dl>
+                <dt>Grind</dt><dd>Fine</dd>
+                <dt>Pressure</dt><dd>~9 bars</dd>
+                <dt>Time</dt><dd>25 &ndash; 30 sec</dd>
+                <dt>Volume</dt><dd>~30 ml shot</dd>
+                <dt>Body</dt><dd>Concentrated &middot; intense</dd>
+            </dl>
+        </aside>
+
+        <div class="best-for reveal">
+            <span class="tag">Foundation for</span>
+            <span><em>lattes, cappuccinos, Americanos</em> &mdash; the base of café culture.</span>
+        </div>
+    </div>
+
+    <div class="slide-meta">
+        <span>04 / 05</span> &nbsp;&middot;&nbsp; <strong>Espresso</strong>
+    </div>
+</section>
+
+<!-- ===========================================
+     SLIDE 5: COLD BREW
+     =========================================== -->
+<section class="slide" data-title="Cold Brew">
+    <div class="shape shape-1" aria-hidden="true"></div>
+    <div class="shape shape-2" aria-hidden="true"></div>
+    <div class="shape shape-3" aria-hidden="true"></div>
+    <div class="accent-line" aria-hidden="true"></div>
+
+    <div class="method">
+        <div class="index reveal">
+            <span>Method &mdash; <strong>05</strong></span>
+            <span>Cold extraction &middot; Slow</span>
+        </div>
+
+        <div class="copy">
+            <span class="label reveal">Cold Brew</span>
+            <h2 class="section-title reveal">Slow, cold, <span class="italic">naturally sweet</span> &mdash; patience as a recipe.</h2>
+            <p class="reveal">Cold brew steeps coarse grounds in cold or room-temperature water for <strong>12&ndash;24 hours</strong>, then filters out the grounds. The slow, cold extraction yields a smooth, <strong>low-acid concentrate</strong> with a natural sweetness &mdash; served over ice, easy to make in batches.</p>
+        </div>
+
+        <aside class="spec-card reveal">
+            <div class="visual cold" aria-hidden="true">
+                <span class="vessel"></span>
+                <span class="drop"></span>
+                <img class="hero-photo"
+                     src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=900&q=85"
+                     alt="Iced cold brew coffee in a glass"
+                     loading="lazy"
+                     onload="this.classList.add('loaded')"
+                     onerror="this.remove()" />
+            </div>
+            <div class="card-title">at a glance</div>
+            <dl>
+                <dt>Grind</dt><dd>Coarse</dd>
+                <dt>Water</dt><dd>Cold &middot; room temp</dd>
+                <dt>Time</dt><dd>12 &ndash; 24 hours</dd>
+                <dt>Acidity</dt><dd>Low</dd>
+                <dt>Form</dt><dd>Concentrate, over ice</dd>
+            </dl>
+        </aside>
+
+        <div class="best-for reveal">
+            <span class="tag">Best for</span>
+            <span>smooth, low-acid sipping &mdash; <em>made in batches, served all week.</em></span>
+        </div>
+    </div>
+
+    <div class="slide-meta">
+        <span>05 / 05</span> &nbsp;&middot;&nbsp; <strong>Cold Brew</strong>
+    </div>
+</section>
+
+<script>
+/* ===========================================
+   SLIDE PRESENTATION CONTROLLER
+   Keyboard, touch, wheel nav + progress + dots
+   =========================================== */
+(function () {
+    'use strict';
+
+    class SlidePresentation {
+        constructor() {
+            this.slides           = Array.from(document.querySelectorAll('.slide'));
+            this.progressBar      = document.querySelector('.progress-bar');
+            this.navDotsContainer = document.querySelector('.nav-dots');
+            this.currentIndex     = 0;
+            this.isAnimating      = false;
+
+            this.setupNavDots();
+            this.setupIntersectionObserver();
+            this.setupKeyboardNav();
+            this.setupTouchNav();
+            this.setupWheelNav();
+            this.setupProgressBar();
+        }
+
+        /* === NAV DOTS === */
+        setupNavDots() {
+            // Clear before building (in case a snapshot re-runs the script)
+            this.navDotsContainer.innerHTML = '';
+            this.slides.forEach((slide, i) => {
+                const btn = document.createElement('button');
+                btn.setAttribute('aria-label', `Go to slide ${i + 1}: ${slide.dataset.title || ''}`);
+                if (i === 0) btn.classList.add('active');
+                const dot = document.createElement('span');
+                dot.className = 'dot';
+                btn.appendChild(dot);
+                btn.addEventListener('click', () => this.goTo(i));
+                this.navDotsContainer.appendChild(btn);
+            });
+        }
+
+        updateActiveDot(index) {
+            const buttons = this.navDotsContainer.querySelectorAll('button');
+            buttons.forEach((b, i) => b.classList.toggle('active', i === index));
+        }
+
+        /* === INTERSECTION OBSERVER (reveal animations) === */
+        setupIntersectionObserver() {
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        const idx = this.slides.indexOf(entry.target);
+                        if (idx !== -1) {
+                            this.currentIndex = idx;
+                            this.updateActiveDot(idx);
+                            this.updateProgress();
+                        }
+                    }
+                });
+            }, { threshold: 0.55 });
+
+            this.slides.forEach((s) => io.observe(s));
+            // Trigger the first slide immediately so the title animates on load
+            requestAnimationFrame(() => this.slides[0].classList.add('visible'));
+        }
+
+        /* === KEYBOARD NAV === */
+        setupKeyboardNav() {
+            document.addEventListener('keydown', (e) => {
+                switch (e.key) {
+                    case 'ArrowDown':
+                    case 'ArrowRight':
+                    case 'PageDown':
+                    case ' ':
+                        e.preventDefault();
+                        this.next();
+                        break;
+                    case 'ArrowUp':
+                    case 'ArrowLeft':
+                    case 'PageUp':
+                        e.preventDefault();
+                        this.prev();
+                        break;
+                    case 'Home':
+                        e.preventDefault();
+                        this.goTo(0);
+                        break;
+                    case 'End':
+                        e.preventDefault();
+                        this.goTo(this.slides.length - 1);
+                        break;
+                }
+            });
+        }
+
+        /* === TOUCH / SWIPE NAV === */
+        setupTouchNav() {
+            let startY = 0;
+            let startX = 0;
+            document.addEventListener('touchstart', (e) => {
+                startY = e.touches[0].clientY;
+                startX = e.touches[0].clientX;
+            }, { passive: true });
+
+            document.addEventListener('touchend', (e) => {
+                const dy = e.changedTouches[0].clientY - startY;
+                const dx = e.changedTouches[0].clientX - startX;
+                if (Math.abs(dy) < 50 || Math.abs(dx) > Math.abs(dy)) return;
+                if (dy < 0) this.next(); else this.prev();
+            }, { passive: true });
+        }
+
+        /* === WHEEL NAV (debounced) === */
+        setupWheelNav() {
+            let lock = false;
+            document.addEventListener('wheel', (e) => {
+                if (lock) return;
+                if (Math.abs(e.deltaY) < 30) return;
+                lock = true;
+                if (e.deltaY > 0) this.next(); else this.prev();
+                setTimeout(() => { lock = false; }, 700);
+            }, { passive: true });
+        }
+
+        /* === PROGRESS BAR === */
+        setupProgressBar() {
+            window.addEventListener('scroll', () => this.updateProgress(), { passive: true });
+            this.updateProgress();
+        }
+
+        updateProgress() {
+            const total = this.slides.length - 1;
+            const pct = total > 0 ? (this.currentIndex / total) * 100 : 0;
+            this.progressBar.style.width = pct + '%';
+        }
+
+        /* === NAVIGATION === */
+        next() {
+            if (this.currentIndex < this.slides.length - 1) {
+                this.goTo(this.currentIndex + 1);
+            }
+        }
+        prev() {
+            if (this.currentIndex > 0) {
+                this.goTo(this.currentIndex - 1);
+            }
+        }
+        goTo(index) {
+            if (index < 0 || index >= this.slides.length) return;
+            this.slides[index].scrollIntoView({ behavior: 'smooth', block: 'start' });
+            this.currentIndex = index;
+            this.updateActiveDot(index);
+            this.updateProgress();
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => new SlidePresentation());
+    // The script lives at the end of <body>, so DOMContentLoaded may have
+    // already fired by the time this runs. Instantiate immediately in that
+    // case so navigation (keys, dots, wheel, swipe) actually wires up.
+    if (document.readyState !== 'loading') {
+        new SlidePresentation();
+    }
+})();
+</script>
+
+</body>
+</html>
