@@ -305,6 +305,63 @@ h2.section-title {
 }
 .slide-title .signature { margin-top: clamp(0.5rem, 1.2vw, 1rem); }
 
+/* === QR CODE CARD (title slide) === */
+.qr-card {
+    position: absolute;
+    right: clamp(1.25rem, 3vw, 3rem);
+    bottom: clamp(1.25rem, 3vw, 3rem);
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(0.4rem, 0.8vw, 0.7rem);
+    padding: clamp(0.6rem, 1.2vw, 0.95rem);
+    background: var(--text-primary);   /* cream — max contrast for scanners */
+    border-radius: 4px;
+    box-shadow:
+        0 14px 40px -10px rgba(0,0,0,0.6),
+        0 0 0 1px rgba(212, 165, 116, 0.35),
+        0 0 24px -8px rgba(212, 165, 116, 0.5);
+    transform: translateY(12px) scale(0.96);
+    opacity: 0;
+    transition:
+        opacity var(--duration-normal) var(--ease-out-expo) 900ms,
+        transform var(--duration-normal) var(--ease-out-expo) 900ms;
+}
+.slide.visible .qr-card { opacity: 1; transform: translateY(0) scale(1); }
+
+.qr-card img {
+    display: block;
+    width: clamp(90px, 11vw, 140px);
+    height: clamp(90px, 11vw, 140px);
+    image-rendering: pixelated;     /* keep QR squares crisp at any size */
+}
+.qr-card .qr-caption {
+    font-family: var(--font-mono);
+    font-size: clamp(0.55rem, 0.8vw, 0.7rem);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--bg-primary);
+    opacity: 0.7;
+    white-space: nowrap;
+}
+.qr-card .qr-fallback {
+    /* Shown only if the QR image fails to load (JS sets display:flex) */
+    display: none;
+    width: clamp(90px, 11vw, 140px);
+    height: clamp(90px, 11vw, 140px);
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: clamp(0.55rem, 0.8vw, 0.7rem);
+    color: var(--bg-primary);
+    background: repeating-linear-gradient(45deg,
+        var(--text-primary) 0 6px,
+        #d8d4ce 6px 12px);
+    padding: 0.5rem;
+}
+
 /* --- Method slides: two-column layout --- */
 .method {
     display: grid;
@@ -701,6 +758,20 @@ h2.section-title {
     <div class="slide-meta">
         <span>01 / 05</span> &nbsp;&middot;&nbsp; <strong>Introduction</strong>
     </div>
+
+    <!-- === QR CODE === links to live GitHub Pages site === -->
+    <a class="qr-card"
+       href="https://skuba45.github.io/vibe-coding-presentation/"
+       target="_blank" rel="noopener"
+       aria-label="Open this presentation on GitHub Pages">
+        <img
+            src="https://api.qrserver.com/v1/create-qr-code/?size=320x320&margin=0&ecc=M&data=https%3A%2F%2Fskuba45.github.io%2Fvibe-coding-presentation%2F"
+            alt="QR code linking to https://skuba45.github.io/vibe-coding-presentation/"
+            loading="lazy"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="qr-fallback" aria-hidden="true">skuba45.github.io/<br/>vibe-coding-presentation</div>
+        <span class="qr-caption">scan &middot; or visit</span>
+    </a>
 </section>
 
 <!-- ===========================================
